@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <title>pos0.2</title>
+            <script>
+
+//                let itemBarcodes = ["ITEM000000","ITEM000000","ITEM000000","ITEM000001","ITEM000001","ITEM000004"];
+                let itemBarcodes = [{barcode: 'ITEM000000'},{barcode: 'ITEM000000'},{barcode: 'ITEM000000'},{barcode: 'ITEM000001'},{barcode: 'ITEM000001'}];
+
+                printReceipt(itemBarcodes);
+
+                function loadAllItems() {
+                    let allItems=[{
+                        barcode: 'ITEM000000',
+                        name: '可口可乐',
+                        unit: '瓶',
+                        price: 3.00
+                        },
+                        {
+                            barcode: 'ITEM000001',
+                            name: '雪碧',
+                            unit: '瓶',
+                            price: 3.00
+                        },
+                        {
+                            barcode: 'ITEM000004',
+                            name: '电池',
+                            unit: '个',
+                            price: 2.00
+                        }
+                    ]
+                    return allItems;
+                }
+
+                function countItems(itemBarcodes) {
+                    let itemsCount = [];
+                    for (let i = 0; i < itemBarcodes.length; i++){
+                        let existItems = itemsCount.find(function (item) {
+                            if(item.barcode === itemBarcodes[i].barcode)
+                                return item;
+                        });
+                        if (existItems) {
+                            existItems.count++;
+                        }
+                        else {
+                            itemsCount.push(Object.assign({},itemBarcodes[i],{count:1}));
+                        }
+                    }
+
+                    return itemsCount;
+
+                }
+
+                function matchItems(allItems,itemsCount) {
+                    let itemsList = [];
+                    for (let i = 0; i<itemsCount.length; i++){
+                        let existItems = allItems.find(function (item) {
+                            if(item.barcode === itemsCount[i].barcode)
+                                return item;
+
+                        });
+                        if (existItems) {
+                            itemsList.push(Object.assign({},existItems,{count:itemsCount[i].count}));
+                        }
+                    }
+                    return itemsList;
+
+                }
+
+                function calculateSubtotal(itemList) {
+                    let itemSubtotal = [];
+                    let sum = 0;
+
+                    for(let i = 0;i < itemList.length;i++) {
+                        sum = itemList[i].count * itemList[i].price;
+                        itemSubtotal.push(Object.assign({},itemList[i],{subtotal:sum}))
+                    }
+                    return itemSubtotal;
+                }
+
+                function calculateTotal(itemSubtotal) {
+
+                    let total = 0;
+
+                    for(let i = 0;i < itemSubtotal.length; i++) {
+                        total += itemSubtotal[i].subtotal;
+                    }
+                    return total;
+                }
+
+                function printReceipt(itemBarcodes) {
+                    let allItems = loadAllItems();
+                    let itemsCount = countItems(itemBarcodes);
+                    let itemList = matchItems(allItems,itemsCount);
+                    let itemSubtotal = calculateSubtotal(itemList);
+                    let total = calculateTotal(itemSubtotal);
+                    print(itemSubtotal,total);
+             }
+
+                function print(subtotal,total) {
+                    console.log("***<没钱赚商店>收据***");
+                    for (let i = 0;i <subtotal.length;i++) {
+                        console.log("名称：" + subtotal[i].name + "，数量：" + subtotal[i].count + "，单价：" + subtotal[i].price + "，小计：" + subtotal[i].subtotal );
+                    }
+                    console.log("总计：" + total  + "(元)");
+                    console.log("**********************");
+
+                }
+
+            </script>
+        </head>
+<body>
+
+</body>
+</html>

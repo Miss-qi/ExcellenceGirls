@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>calculateSquare</title>
+    <script>
+
+        let min = 0;
+        let max = 100;
+        function printReceipt(min,max) {
+            let numbers = getNumbers(min,max);
+            console.log(numbers);
+            let oddNumbers = getOdd(numbers);
+            console.log(oddNumbers);
+
+            let squareNumbers = getSquare(oddNumbers);
+            console.log(squareNumbers);
+
+            let sum = sumSquare(squareNumbers);
+            console.log(min + "到" + max +"之间的奇数的平方和为：" + sum);
+        }
+
+        printReceipt(min,max);
+
+        function getNumbers(min,max) {
+            let numbers = [];
+            for (let i = min; i <= max; i++){
+                numbers.push(i);
+            }
+            return numbers;
+        }
+
+        function getOdd(numbers) {
+            let oddNumbers = [];
+            for (let i = 0; i <numbers.length; i++){
+                if(numbers[i]%2 != 0 ){
+                    oddNumbers.push(numbers[i]);
+                }
+            }
+            return oddNumbers;
+        }
+
+        function getSquare(oddNumbers) {
+            let squareNumbers = [];
+            for (let i = 0; i < oddNumbers.length; i++){
+                oddNumbers[i] *= oddNumbers[i];
+                squareNumbers.push(oddNumbers[i]);
+            }
+            return squareNumbers;
+        }
+
+        function sumSquare(squareNumbers) {
+            let sumNum = 0;
+            for (let i = 0; i < squareNumbers.length; i++){
+                sumNum += squareNumbers[i];
+            }
+            return sumNum;
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>
